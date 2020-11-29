@@ -1,10 +1,17 @@
 from controller import *
 import mavic2proHelper
+import image_processing
 import PID
 import csv
 import struct
+import numpy as np
 from timeit import default_timer as timer
-
+import time
+import math
+#C:\Users\saulb\AppData\Local\Programs\Python\Python37\python.exe
+#C:\Python38\python.exe
+#C:\ProgramData\Anaconda3\pythonw.exe
+#python -m ensurepip --default-pip
 
 params = dict()
 with open("../params.csv", "r") as f:
@@ -37,6 +44,13 @@ compass = Compass("compass")
 compass.enable(TIME_STEP)
 gyro = Gyro("gyro")
 gyro.enable(TIME_STEP)
+#cameraRobot = Robot("cameraRobot")
+#camera = cameraRobot.getCamera("eagleCamera")
+#camera = Camera("eagleCamera")
+#camera.enable(TIME_STEP)
+#camera.getImage()
+#image = camera.getImage()
+#data = np.array(image.getdata(), np.uint8).reshape(image.size[1], image.size[0], 3)
 
 yaw_setpoint=-1
 pitch_Kp = 2
@@ -52,8 +66,9 @@ yawPID = PID.PID(float(params["yaw_Kp"]), float(params["yaw_Ki"]), float(params[
 
 def headTo(targetX, targetY, targetZ, maxTimeToGetThere):
 	startTime = timer()
+	print([targetX, targetY, targetZ])
 	while (robot.step(timestep) != -1 and (timer() - startTime < maxTimeToGetThere)):
-		print("im flying")
+		#print("im flying")
 		led_state = int(robot.getTime()) % 2
 		front_left_led.set(led_state)
 		front_right_led.set(int(not(led_state)))
@@ -84,12 +99,46 @@ def headTo(targetX, targetY, targetZ, maxTimeToGetThere):
 
 		mavic2proHelper.motorsSpeed(robot, front_left_motor_input, -front_right_motor_input, -rear_left_motor_input, rear_right_motor_input)
 	
-	print("im not flying anymore")
+	#print("im not flying anymore")
 	return
+#xSol = np.array([0.258552, -18.4218, -26.1784, -45.3112, -61.4061])
+#ySol = np.array([-0.261272, -2.48208, 0.261272, 5.61734, 22.6])
 
-headTo(2.0,1.5,1,2.4)
-headTo(2.0,1,1,2.4)
-headTo(1,1,1,2.4)
-headTo(0,1,1,2.4)
-headTo(0,0,1,2.4)
-headTo(0,0,0,1000)
+##xSol = np.array([  0.258125, -18.4525  , -26.209384, -45.34774 , -61.405593])
+##ySol = np.array([ -0.259677,  -2.397053,   0.347221,   5.718543,  22.599245])
+
+xSol, ySol = image_processing.process()
+Sol = np.concatenate(([xSol], [ySol]), axis=0)
+Sol = np.concatenate((Sol, np.ones((1, np.size(Sol, axis=1)))), axis=0)
+Sol = np.concatenate((np.array([[0,0],[0,0],[0.1, 1]]), Sol), axis=1)
+Sol = np.concatenate((Sol, np.array([[Sol[0, -1]],[Sol[1, -1]],[0.1]])), axis=1)
+print("---Solution---")
+print(Sol)
+#headTo(0,0.25,0,6)
+#headTo(0,0.5,0,6)
+#headTo(0,0.75,0,6)
+#headTo(0,1,0,6)
+#headTo(0,1.2,0,6)
+speed=0.05
+i=1
+while i<np.size(Sol, 1):
+    distance =  math.sqrt((Sol[0, i]-Sol[0, i-1])**2+(Sol[1, i]-Sol[1, i-1])**2+(Sol[2, i]-Sol[2, i-1])**2)
+    if(i==1):
+        time =distance/0.02
+    else:
+        time =distance/speed
+    div = distance//0.1 +1
+    if (time<0.5):
+        time = 0.8
+    for j in range(round(div)):
+        xStep = (1-j/div)*Sol[0, i-1]+(j/div)*Sol[0, i]
+        yStep = (1-j/div)*Sol[1, i-1]+(j/div)*Sol[1, i]
+        zStep = (1-j/div)*Sol[2, i-1]+(j/div)*Sol[2, i]
+        headTo(yStep,-xStep,zStep,time/div)#(xStep,zStep,yStep,time)
+    i=i+1
+#headTo(2.0,1.5,1,2.4)
+#headTo(2.0,1,1,2.4)
+#headTo(1,1,1,2.4)
+#headTo(0,1,1,2.4)
+#headTo(0,0,1,2.4)
+#headTo(0,0,0,1000)

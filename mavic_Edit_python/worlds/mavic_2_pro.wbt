@@ -13,13 +13,34 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.03020908587680537 -0.9992838291733122 -0.02278683574370252 4.957267222269368
-  position 5.590779783805172 0.4150795765661645 1.6128871367341726
+  orientation -0.07126246789917155 0.6604557321969327 0.7474756761775819 3.0663164574771273
+  position -0.0840154288791789 2.4673415200521456 0.2836235013366338
   near 0.2
   followSmoothness 0.2
 }
 TexturedBackground {
   luminosity 3
+}
+Robot {
+  translation -31.41 100 0
+  children [
+    Camera {
+      translation 0 -0.25 0
+      rotation 0 0.7071067811865476 0.7071067811865476 3.141592653589793
+      name "eagleCamera"
+      width 1280
+      height 1080
+    }
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Box {
+        size 0.5 0.5 0.5
+      }
+    }
+  ]
+  name "cameraRobot"
+  controller "cameraControllerPython"
 }
 TexturedBackgroundLight {
 }
@@ -27,27 +48,35 @@ Floor {
   size 400 400
   tileSize 6 6
   appearance SandyGround {
+    textureTransform TextureTransform {
+      scale 0 0
+    }
   }
 }
-Road {
-  translation -43.8 0.01 -9.2
-  rotation 0 1 0 1.1781
-  width 3
-  numberOfLanes 1
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    0 0 100
-    200 0 200
+Solid {
+  translation -61.59 0.1 22.58
+  children [
+    Shape {
+      geometry Cylinder {
+        height 0.01
+        radius 2.5
+      }
+    }
   ]
-  splineSubdivision 8
-  appearance Pavement {
-  }
 }
 Windmill {
   translation -43.8656 0 19.8433
   rotation 0 1 0 -1.0472
+}
+Windmill {
+  translation -41.2356 0 12.3785
+  rotation 0 1 0 -1.0472
+  name "windmill(4)"
+}
+Windmill {
+  translation -57.2826 0 9.10342
+  rotation 0 1 0 -1.0472
+  name "windmill(5)"
 }
 Windmill {
   translation -44.258 0 27.3356
@@ -70,6 +99,7 @@ SmallManor {
 }
 SquareManhole {
   translation 0 -0.03 0
+  size 5 0.1 5
 }
 TeslaModel3Simple {
   translation -41.5139 0.31 -4.34169
@@ -78,6 +108,11 @@ TeslaModel3Simple {
 Pine {
   translation -14.0083 0 14.4828
   rotation 0 1 0 3.14159
+}
+Pine {
+  translation -25.9483 0 14.4828
+  rotation 0 1 0 3.14159
+  name "pine tree(9)"
 }
 Pine {
   translation -19.6195 0 24.3783
@@ -89,6 +124,10 @@ Pine {
   name "pine tree(3)"
 }
 Pine {
+  translation -18.6429 0 2.68795
+  name "pine tree(8)"
+}
+Pine {
   translation -10.6926 0 25.1339
   name "pine tree(4)"
 }
@@ -97,42 +136,19 @@ Pine {
   name "pine tree(5)"
 }
 Pine {
-  translation -26.6328 0 7.1707
+  translation -26.6328 0 4.2107
   name "pine tree(6)"
+}
+Pine {
+  translation -51.9728 0 26.3607
+  name "pine tree(7)"
 }
 Pine {
   translation -9.37029 0 -14.0209
   rotation 0 1 0 -2.618
   name "pine tree(2)"
 }
-Forest {
-  translation 0 -0.01 0
-  shape [
-    200 200
-    200 0
-    50 0
-    50 50
-    -50 50
-    -50 -50
-    50 -50
-    50 0
-    200 0
-    200 -200
-    -200 -200
-    -200 200
-  ]
-  density 0.01
-  type "cherry tree"
-  randomSeed 1
-  maxHeight 12
-  minHeight 6
-  maxRadius 6
-  minRadius 3
-}
 Mavic2Pro {
-  hidden position_0_0 -1.3811163532902688e-09
-  hidden position_6_0 -3.124125451904938e-09
-  hidden position_7_0 -1.196513474328974e-09
   translation 0 0.1 0
   rotation 0.009137368927045055 -0.7070605726262135 -0.7070939507071051 -3.123090317151868
   name "Mavic 2 PRO(1)"
