@@ -1,5 +1,15 @@
 """cameraControllerPython controller."""
 
+'''
+
+Jorge Diego Rodríguez Saltijeral - A01381487
+Pablo César Ruíz Hernández - A01197044
+Francisco Rodolfo Madero Martin - A00820899
+Humberto Tello - A01196965
+Saúl Bermea González - A01282698 
+
+'''
+
 # You may need to import some classes of the controller module. Ex:
 #  from controller import Robot, Motor, DistanceSensor
 from controller import *

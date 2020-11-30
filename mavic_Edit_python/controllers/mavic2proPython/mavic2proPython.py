@@ -13,6 +13,17 @@ import math
 #C:\ProgramData\Anaconda3\pythonw.exe
 #python -m ensurepip --default-pip
 
+'''
+gran parte recuperada de internet por:
+Jorge Diego Rodríguez Saltijeral - A01381487
+Pablo César Ruíz Hernández - A01197044
+Francisco Rodolfo Madero Martin - A00820899
+Humberto Tello - A01196965
+Saúl Bermea González - A01282698 
+
+'''
+
+
 params = dict()
 with open("../params.csv", "r") as f:
 	lines = csv.reader(f)
