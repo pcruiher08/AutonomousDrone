@@ -70,6 +70,7 @@ def process():
     destination = str(round(1034/xL))+", "+str(round(184/yL))
     obstacles = np.array(["empty"])
     
+    contoursNew = np.array([[1, 2, 3]])
     divisions = img.copy()
     i=0
     #print(len(contours))
@@ -120,7 +121,8 @@ def process():
             else:
                 temp = str(round(x/xL))+","+str(round(y/yL))+";"+str(round((x+w)/xL))+","+str(round((y+h)/yL))
                 obstacles = np.concatenate((obstacles,[temp]), axis=0)
-            
+                contoursNew = np.concatenate((contoursNew,[[x+w/2, y+h/2, math.sqrt(w**2+h**2)/2]]), axis=0)
+                divisions = cv.circle(divisions, (round(x+w/2),round(y+h/2)), int(math.sqrt(w**2+h**2)/2), (255, 0, 0), 2)
             i=i+1
         else:
             contours.pop(i)
@@ -163,7 +165,7 @@ def process():
     utils = Utils()
     utils.drawMap(allObs, current, destination)
     
-    numSamples= 500
+    numSamples= 250
     prm = PRMController(numSamples, allObs, current, destination)
     # Initial random seed to try
     initialRandomSeed = 0
@@ -176,18 +178,59 @@ def process():
     j=0
     for j in range(len(ySol)-1):
         solutionImg = cv.line(solutionImg, (int(xSol[j]), int(ySol[j])), (int(xSol[j+1]), int(ySol[j+1])), (255, 0, 0), 2)
-    cv.imshow('Soution', solutionImg)
+    
     ###cv.imwrite("images\solution.png", solutionImg)
     
     solutionImgO = OrigImag.copy()
     j=0
     for j in range(len(ySol)-1):
         solutionImgO = cv.line(solutionImgO, (int(xSol[j]), int(ySol[j])), (int(xSol[j+1]), int(ySol[j+1])), (255, 0, 0), 2)
-    cv.imshow('Soution Map', solutionImgO)
+    
     ###cv.imwrite("images\solutionMap.png", solutionImgO)
     
     #xSol = -0.064637985309549*(xSol-157)
     #ySol = -0.065317919075145*(ySol-539)
+    contoursNew = np.delete(contoursNew, 0, axis=0)
+    print("contoursNew")
+    print(contoursNew)
+    i=0
+    while i<len(ySol):
+        j=i+2
+        iteration = 0
+        while j<len(ySol):
+            mI=ySol[i]
+            b=xSol[i]
+            k=(ySol[j]-ySol[i])/(xSol[j]-xSol[i])
+            freeObst = True
+            for cN in range(len(contoursNew)):
+                x=(contoursNew[cN,0]+contoursNew[cN,1]*k-mI*k+b*k**2)/(1+k**2);
+                y= mI+(x-b)*k
+                distObs=math.sqrt((contoursNew[cN,0]-x)**2+(contoursNew[cN,1]-y)**2)-2
+                interX = (x<xSol[j] and x>xSol[i]) or (x>xSol[j] and x<xSol[i])
+                interY = (y<ySol[j] and y>ySol[i]) or (y>ySol[j] and y<ySol[i])
+                if(contoursNew[cN, 2]>distObs and interX and interY):
+                    freeObst = False
+            if(freeObst):
+                xSol = np.delete(xSol, range(i+1,j), axis=0)
+                ySol = np.delete(ySol, range(i+1,j), axis=0)
+                j=i+2
+            else:
+                j=j+1
+            iteration = iteration+1
+        i=i+1
+            
+    j=0
+    for j in range(len(ySol)-1):
+        solutionImg = cv.line(solutionImg, (int(xSol[j]), int(ySol[j])), (int(xSol[j+1]), int(ySol[j+1])), (0, 255, 0), 2)
+    cv.imshow('Soution', solutionImg)
+    ###cv.imwrite("images\solution.png", solutionImg)
+    
+    solutionImgO = OrigImag.copy()
+    j=0
+    for j in range(len(ySol)-1):
+        solutionImgO = cv.line(solutionImgO, (int(xSol[j]), int(ySol[j])), (int(xSol[j+1]), int(ySol[j+1])), (0, 255, 0), 2)
+    cv.imshow('Soution Map', solutionImgO)
+    
     
     Sol = np.concatenate(([xSol], [ySol], np.ones((1, np.size(xSol, axis=0)))), axis=0)    
     #Sol = np.array([[-0.56648, 0.022008, -2.96859],[0.362136, 0.932125,-559.271],[0,0,1]])*Sol

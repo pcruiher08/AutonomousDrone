@@ -119,7 +119,7 @@ print(Sol)
 #headTo(0,0.75,0,6)
 #headTo(0,1,0,6)
 #headTo(0,1.2,0,6)
-speed=0.05
+speed=1.2
 i=1
 while i<np.size(Sol, 1):
     distance =  math.sqrt((Sol[0, i]-Sol[0, i-1])**2+(Sol[1, i]-Sol[1, i-1])**2+(Sol[2, i]-Sol[2, i-1])**2)
@@ -134,7 +134,7 @@ while i<np.size(Sol, 1):
         xStep = (1-j/div)*Sol[0, i-1]+(j/div)*Sol[0, i]
         yStep = (1-j/div)*Sol[1, i-1]+(j/div)*Sol[1, i]
         zStep = (1-j/div)*Sol[2, i-1]+(j/div)*Sol[2, i]
-        headTo(yStep,-xStep,zStep,time/div)#(xStep,zStep,yStep,time)
+        headTo(yStep,-xStep,zStep,math.pi-1.25)#(xStep,zStep,yStep,time)
     i=i+1
 #headTo(2.0,1.5,1,2.4)
 #headTo(2.0,1,1,2.4)

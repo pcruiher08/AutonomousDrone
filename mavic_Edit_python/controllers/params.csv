@@ -1,4 +1,4 @@
-QUADCOPTER_TIME_STEP,8,ROVER_TIME_STEP,64
+QUADCOPTER_TIME_STEP,8,ROVER_TIME_STEP,256
 TAKEOFF_THRESHOLD_VELOCITY,160,floor_width,70
 k_vertical_thrust,68.5,floor_height,42.4
 k_roll_p,10,waypoint_reached_tolerance,0.1

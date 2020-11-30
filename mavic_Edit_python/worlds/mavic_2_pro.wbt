@@ -5,7 +5,8 @@ WorldInfo {
     "After the drone has taken off, you can control it with the keyboard of your computer."
   ]
   title "DJI Mavic 2 PRO demo"
-  basicTimeStep 8
+  basicTimeStep 9
+  FPS 30
   defaultDamping Damping {
     linear 0.5
     angular 0.5
@@ -13,9 +14,10 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -0.07126246789917155 0.6604557321969327 0.7474756761775819 3.0663164574771273
-  position -0.0840154288791789 2.4673415200521456 0.2836235013366338
+  orientation -0.6167287500152772 0.6680740851339785 0.4163203882552371 1.668292731045241
+  position 24.904205795751647 125.29174929039459 27.676572062004546
   near 0.2
+  follow "Mavic 2 PRO(1)"
   followSmoothness 0.2
 }
 TexturedBackground {
@@ -43,6 +45,7 @@ Robot {
   controller "cameraControllerPython"
 }
 TexturedBackgroundLight {
+  castShadows FALSE
 }
 Floor {
   size 400 400
@@ -54,7 +57,7 @@ Floor {
   }
 }
 Solid {
-  translation -61.59 0.1 22.58
+  translation -22.57 0.1 0.57
   children [
     Shape {
       geometry Cylinder {
@@ -65,36 +68,36 @@ Solid {
   ]
 }
 Windmill {
-  translation -43.8656 0 19.8433
-  rotation 0 1 0 -1.0472
+  translation -29.3017 4.16199e-08 8.929
+  rotation 9.58979e-09 -1 -1.661e-08 1.0472
 }
 Windmill {
-  translation -41.2356 0 12.3785
+  translation -13.1311 0 -5.32513
   rotation 0 1 0 -1.0472
   name "windmill(4)"
 }
 Windmill {
-  translation -57.2826 0 9.10342
+  translation -33.2164 0 4.80503
   rotation 0 1 0 -1.0472
   name "windmill(5)"
 }
 Windmill {
-  translation -44.258 0 27.3356
+  translation -27.9642 0 12.9397
   rotation 0 1 0 -1.0472
   name "windmill(1)"
 }
 Windmill {
-  translation -46.2448 0 -30.573
+  translation -22.6161 0 -13.5075
   rotation 0 1 0 -1.0472
   name "windmill(2)"
 }
 Windmill {
-  translation -38.75 0 -23.4
+  translation -25.97 0 -9.86
   rotation 0 1 0 -1.5708
   name "windmill(3)"
 }
 SmallManor {
-  translation -50.35 0 -11.25
+  translation -34.6912 0 -7.32387
   rotation 0 1 0 4.32
 }
 SquareManhole {
@@ -102,33 +105,33 @@ SquareManhole {
   size 5 0.1 5
 }
 TeslaModel3Simple {
-  translation -41.5139 0.31 -4.34169
+  translation -29.1395 0.31 -1.02608
   rotation 0 -1 0 -1.309
 }
 Pine {
-  translation -14.0083 0 14.4828
+  translation -14.0083 0 6.9728
   rotation 0 1 0 3.14159
 }
 Pine {
-  translation -25.9483 0 14.4828
+  translation -19.2883 0 6.1628
   rotation 0 1 0 3.14159
   name "pine tree(9)"
 }
 Pine {
-  translation -19.6195 0 24.3783
+  translation -16.2847 0 11.9248
   rotation 0 1 0 2.87979
   name "pine tree(1)"
 }
 Pine {
-  translation -22.0129 0 -6.20205
+  translation -18.4229 0 -8.74205
   name "pine tree(3)"
 }
 Pine {
-  translation -18.6429 0 2.68795
+  translation -17.6029 0 -0.29205
   name "pine tree(8)"
 }
 Pine {
-  translation -10.6926 0 25.1339
+  translation -10.6926 0 2.4539
   name "pine tree(4)"
 }
 Pine {
@@ -136,11 +139,11 @@ Pine {
   name "pine tree(5)"
 }
 Pine {
-  translation -26.6328 0 4.2107
+  translation -23.0728 0 14.5407
   name "pine tree(6)"
 }
 Pine {
-  translation -51.9728 0 26.3607
+  translation -22.4928 0 9.9107
   name "pine tree(7)"
 }
 Pine {
