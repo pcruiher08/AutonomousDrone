@@ -99,7 +99,13 @@ def headTo(targetX, targetY, targetZ, maxTimeToGetThere):
 
 		mavic2proHelper.motorsSpeed(robot, front_left_motor_input, -front_right_motor_input, -rear_left_motor_input, rear_right_motor_input)
 	
+	#print("im not flying anymore")
 	return
+#xSol = np.array([0.258552, -18.4218, -26.1784, -45.3112, -61.4061])
+#ySol = np.array([-0.261272, -2.48208, 0.261272, 5.61734, 22.6])
+
+##xSol = np.array([  0.258125, -18.4525  , -26.209384, -45.34774 , -61.405593])
+##ySol = np.array([ -0.259677,  -2.397053,   0.347221,   5.718543,  22.599245])
 
 xSol, ySol = image_processing.process()
 Sol = np.concatenate(([xSol], [ySol]), axis=0)
@@ -108,7 +114,11 @@ Sol = np.concatenate((np.array([[0,0],[0,0],[0.1, 1]]), Sol), axis=1)
 Sol = np.concatenate((Sol, np.array([[Sol[0, -1]],[Sol[1, -1]],[0.1]])), axis=1)
 print("---Solution---")
 print(Sol)
-
+#headTo(0,0.25,0,6)
+#headTo(0,0.5,0,6)
+#headTo(0,0.75,0,6)
+#headTo(0,1,0,6)
+#headTo(0,1.2,0,6)
 speed=1.2
 i=1
 while i<np.size(Sol, 1):
@@ -126,3 +136,9 @@ while i<np.size(Sol, 1):
         zStep = (1-j/div)*Sol[2, i-1]+(j/div)*Sol[2, i]
         headTo(yStep,-xStep,zStep,math.pi-1.25)#(xStep,zStep,yStep,time)
     i=i+1
+#headTo(2.0,1.5,1,2.4)
+#headTo(2.0,1,1,2.4)
+#headTo(1,1,1,2.4)
+#headTo(0,1,1,2.4)
+#headTo(0,0,1,2.4)
+#headTo(0,0,0,1000)
