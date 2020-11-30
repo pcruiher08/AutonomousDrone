@@ -9,4 +9,4 @@ orthographicViewHeight: 1
 textFiles: 1 "controllers/mavic2proPython/image_processing.py" "C:/Users/pcruiher08/AppData/Local/Programs/Python/Python37/lib/site-packages/matplotlib/__init__.py"
 consoles: Console:All:All
 renderingDevicePerspectives: Mavic 2 PRO(1):camera;1;0.2875;0;0
-renderingDevicePerspectives: cameraRobot:eagleCamera;0;0.578125;0;0;13;95;1918;1061;0
+renderingDevicePerspectives: cameraRobot:eagleCamera;1;0.0734375;0;0
